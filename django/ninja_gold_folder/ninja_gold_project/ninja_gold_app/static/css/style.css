@@ -1,0 +1,23 @@
+#wrapper{
+    width: 1024px;
+    background-color:darkgrey;
+    margin: auto;
+    padding: 10px;
+
+}
+
+#middle{
+
+    padding: 10px;
+
+    display: flex;
+    justify-content: space-around;
+
+
+
+}
+
+.items{
+    border: 2px solid darkmagenta;
+    padding: 50px;
+}
