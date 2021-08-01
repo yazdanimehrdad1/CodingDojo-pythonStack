@@ -1,0 +1,67 @@
+>>> book1
+<Book: Book object (1)>
+>>> book1.title
+'book1_title'
+>>> book1.title.update("book1_title_updated")
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'str' object has no attribute 'update'
+>>> book1.title.update("book1_title_upda
+  File "<console>", line 1
+    book1.title.update("book1_title_upda
+                                       ^
+SyntaxError: EOL while scanning string literal
+>>> book1.title= "book1_title_updated"
+>>> book1.title
+'book1_title_updated'
+>>> 
+>>> 
+>>> publisher4 = Publisher.objects.get(id=4)
+>>> publisher4.name = "publisher4_updated"
+>>> publisher4.name 
+'publisher4_updated'
+>>> book1
+<Book: Book object (1)>
+>>> book.authors.add(publisher1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'book' is not defined
+>>> book1.authors.add(publisher1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Book' object has no attribute 'authors'
+>>> book1.publishers.add(publisher1)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'publisher1' is not defined
+>>> publisher1 = Publisher.objects.get(id=1)
+>>> publisher2 = Publisher.objects.get(id=2)
+>>> publisher3 = Publisher.objects.get(id=3)
+>>> book1.publishers.add(publisher1)
+>>> book2= Book.objects.get(id=2)
+>>> book2.publishers.add(publisher1)
+>>> book3= Book.objects.get(id=3)
+>>> book1.publishers.add(publisher2)
+>>> book2.publishers.add(publisher2)
+>>> book3.publishers.add(publisher2)
+>>> book1.publishers
+<django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager object at 0x7fc50e733af0>
+>>> book1.publishers()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+TypeError: __call__() missing 1 required keyword-only argument: 'manager'
+>>> book1.publishers.all()
+<QuerySet [<Publisher: Publisher object (1)>, <Publisher: Publisher object (2)>]>
+>>> book2.publishers.all()
+<QuerySet [<Publisher: Publisher object (1)>, <Publisher: Publisher object (2)>]>
+>>> book3.publishers.all()
+<QuerySet [<Publisher: Publisher object (2)>]>
+>>> book4.publishers.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'book4' is not defined
+>>> 
+>>> 
+>>> book3.publishers.remove(publisher2)
+>>> book3.publishers.all()
+<QuerySet []>

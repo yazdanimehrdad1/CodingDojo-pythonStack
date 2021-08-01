@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+
+    <script ></script>
+
+    <title>Users ORM</title>
+</head>
+<body>
+    
+    <h1>Add a User</h1>
+    <div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="row">ID</th>
+                    <th scope="row">Name</th>
+                    <th scope="row">Email</th>
+                    <th scope="row">Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users_info%}
+                <tr>
+                    <td> {{user.id}} </td>
+                    <td> {{user.first_name}}  {{user.last_name}} </td>
+                    <td> {{user.email}} </td>
+                    <td> {{user.age}} </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+    <form action="/create" method="POST">
+        {% csrf_token %}
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name">
+        <label for="last_name">Lat Name</label>
+        <input type="text" name="last_name" id="last_name">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email">
+        <label for="age">Age</label>
+        <input type="text" name="age" id="age">
+        <input type="submit" value="Add">
+
+
+
+    </form>
+</body>
+</html>

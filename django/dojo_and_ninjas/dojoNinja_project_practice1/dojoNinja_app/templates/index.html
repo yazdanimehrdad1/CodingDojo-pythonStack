@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    {%load static%}
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="container">
+        <div id="top-container">
+
+
+            <div  >
+                <h1>Add a Dojo</h1>
+                <form action="/create_dojo" method="POST">
+                    {% csrf_token %}
+
+                    <label for="dojo_name">Name</label>
+                    <input type="text" name="dojo_name" id="dojo_name">
+                
+                    <label for="dojo_city">City</label>
+                    <input type="text" name="dojo_city" id="dojo_city">
+
+                    <label for="dojo_state">State</label>
+                    <input type="text" name="dojo_state" id="dojo_state">
+                    <button>Add</button>
+                </form>
+            </div>
+            <div  >
+                <h1>Add a Ninja</h1>
+                <form action="/create_ninja" method="POST">
+                    {% csrf_token %}
+                    <label for="ninja_first_name">First Name</label>
+                    <input type="text" name="ninja_first_name" id="ninja_first_name">
+                
+                    <label for="ninja_last_name">Last Name</label>
+                    <input type="text" name="ninja_last_name" id="ninja_last_name">
+
+                    <select name="assigned_dojo" id="assigned_dojo">
+
+                        {% for dojo in dojos %}
+                        <option value="{{dojo}}"> {{dojo.name}}</option>
+                        {% endfor%}
+
+                    </select>
+                    
+                    <button>Add</button>
+                </form>
+
+            </div>
+
+        </div>
+
+        <div id="buttom-container">
+
+            <h1>All the Dojos</h1>
+
+            <ul>
+                {%for dojo in dojos%}
+                    <li> <p>Ninjas at the {{dojo.name}} </p> </li>
+                    
+                {%endfor%}
+            </ul>
+            <p>Dojo #1</p>
+            <p>Ninja</p>
+
+        </div>
+
+    </div>
+    
+</body>
+</html>
