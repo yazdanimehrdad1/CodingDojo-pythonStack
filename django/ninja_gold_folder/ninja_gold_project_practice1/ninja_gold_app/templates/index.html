@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Gold</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+      rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">   
+    
+</head>
+<body>
+    <header>
+        <h1>Ninja Gold</h1>
+        <a href="/reset"><button>Reset</button></a>
+    </header>
+
+
+    <h3>Your Gold: <input type="text" disabled value="{{request.session.gold}}"></h3>
+    <div id="buildings">
+        <div>
+            <h1>Farm</h1>
+            <p>(earns 10-20 golds)</p>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="event" value="farm">
+                <button>Find Gold!</button>
+            </form>
+        </div>
+
+        
+        <div>
+            <h1>Cave</h1>
+            <p>(earns 5-10 golds)</p>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="event" value="cave">
+                <button>Find Gold!</button>
+            </form>
+        </div>
+        <div>
+            <h1>House</h1>
+            <p>(earns 2-5 golds)</p>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="event" value="house">
+                <button>Find Gold!</button>
+            </form>
+        </div>
+        <div>
+            <h1>Casino</h1>
+            <p>(earns/takes 0-50 golds)</p>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="event" value="casino">
+                <button>Find Gold!</button>
+            </form>
+        </div>
+    </div>
+
+    <h2>Activities</h2>
+    <div id="activities">
+     {%for activity in request.session.result reversed %}
+        <p class= "{{request.session.textColor}}" >  {{ activity }}</p>
+     {%endfor%}
+    </div>
+</body>
+</html>

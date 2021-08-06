@@ -27,6 +27,7 @@ def create_ninja(request):
   
     Ninja.objects.create(
         first_name = request.POST['ninja_first_name'],
-        last_name = request.POST['ninja_last_name']
+        last_name = request.POST['ninja_last_name'],
+        dojo_id = request.POST['assigned_dojo']    #??????
     )
     return redirect('/')

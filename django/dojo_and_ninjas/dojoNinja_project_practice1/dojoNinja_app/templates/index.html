@@ -44,7 +44,7 @@
                     <select name="assigned_dojo" id="assigned_dojo">
 
                         {% for dojo in dojos %}
-                        <option value="{{dojo}}"> {{dojo.name}}</option>
+                        <option value="{{dojo.id}}"> {{dojo.name}}</option>
                         {% endfor%}
 
                     </select>
@@ -62,12 +62,15 @@
 
             <ul>
                 {%for dojo in dojos%}
-                    <li> <p>Ninjas at the {{dojo.name}} </p> </li>
+                    <h2>Ninjas at the {{dojo.name}} </h2> 
                     
+                    {% for ninja in dojo.ninjas.all %}
+                        <li> {{ninja.first_name}} {{ninja.last_name}}</li>
+                    {% endfor%}
+
                 {%endfor%}
             </ul>
-            <p>Dojo #1</p>
-            <p>Ninja</p>
+  
 
         </div>
 
