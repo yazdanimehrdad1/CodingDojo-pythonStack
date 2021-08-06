@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect,HttpResponse
 from .models import TVSHOW
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -17,6 +18,14 @@ def add_show(request):
 
 def create(request):
     # we want to add the items from the form to the db
+    errors = TVSHOW.objects.basic_validator(request.POST)
+
+    if len(errors)>0:
+        for key,value in errors.items():
+            messages.error(request, value)
+        return redirect('/shows')
+
+
     if request.method== "GET":
         redirect('/')
 
