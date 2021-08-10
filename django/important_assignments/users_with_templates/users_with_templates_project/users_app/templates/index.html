@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    {%load static%}
+    <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class= "container">
+        
+        <h1>All the Users</h1>
+
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th >ID</th>
+                    <th >Name</th>
+                    <th >Email</th>
+                    <th >Age</th>
+                </tr>
+            </thead>
+        <tbody>
+            {%for user in users %}
+            <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.full_name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.age}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+
+
+        <h1>Add a user</h1>
+        <form action="/create" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" name="age" id="age" class="form-control">
+            </div>
+            <button class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    
+</body>
+</html>
