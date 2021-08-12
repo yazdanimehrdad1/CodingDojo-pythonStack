@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.staticfiles',
+    'debug_toolbar',
     'wall_app',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -10,5 +10,6 @@ urlpatterns = [
     path('logout', views.logout),
     path('create_message', views.create_message),
     path('create_comment/<int:message_id>', views.create_comment),
+    path('like/<int:message_id>', views.add_like)
     
 ]

@@ -65,6 +65,7 @@ class Message(models.Model):
     #one user that created a message
     message_created_by = models.ForeignKey(User, related_name="user_messages", on_delete=models.CASCADE)
     #message_comments = list of comments that belong to a message
+    user_likes = models.ManyToManyField(User, related_name='liked_posts')
     updated_at = models.DateTimeField(auto_now_add=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 

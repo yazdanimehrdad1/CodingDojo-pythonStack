@@ -57,10 +57,22 @@
             <div class="inline">
                 <strong>{{message.message_created_by.first_name}}  {{message.message_created_by.last_name}}</strong>
                 <p>-------</p>
-                <p>{{message.created_at}}</p>
+                <p> created at {{message.created_at | date:"SHORT_DATE_FORMAT"}}</p>
+                <p>---</p>
+                <p> updated at {{message.updated_at | date:"D d M Y f A"}}</p>
             </div>
             <div class="container" >
                 <p>{{message.message}}</p>
+
+                <a href="/like/{{message.id}}">Like Post</a>
+                <p>{{message.user_likes.count}}</p>
+
+
+                <!-- loop through comments -->
+                {%for comment in message.message_comments.all%}
+                    <p>{{comment.comment}}</p>
+                    <p>comment created by {{comment.comment_created_by.first_name}}</p>
+                {%endfor%}
 
                 <form action="/create_comment/{{message.id}}"  method="POST">
                     {%csrf_token%}
@@ -70,11 +82,6 @@
                     </div>
                     <button type="submit" class="btn btn-success">Post a comment</button>
                 </form>
-                <!-- loop through comments -->
-                {%for comment in message.message_comments.all%}
-                    <p>{{comment.comment}}</p>
-                    <p>comment created by {{comment.comment_created_by.first_name}}</p>
-                {%endfor%}
             </div>
 
         {%endfor%}

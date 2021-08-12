@@ -58,6 +58,20 @@ def create_comment(request, message_id):
     return redirect('/wall')
 
 
+
+def add_like(request,message_id):
+    liked_message = Message.objects.get(id=message_id)
+    user_liking = User.objects.get(id=request.session['user_id'])
+    liked_message.user_likes.add(user_liking)
+    return redirect('/wall')
+
+
+
+
+
+
+
+
 def logout(request):
     request.session.flush()
     return redirect('/')
@@ -65,12 +79,11 @@ def logout(request):
 def main(request):
     # handle errors
 
-    
     return render(request, 'login.html')
 
 def wall(request):
     users = User.objects.all()
-    messages= Message.objects.all()
+    messages= Message.objects.all().order_by('created_at').reverse()
     
     context={
         "users":users,
