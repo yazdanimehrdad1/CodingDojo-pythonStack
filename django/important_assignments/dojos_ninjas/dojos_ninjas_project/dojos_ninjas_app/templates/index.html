@@ -70,7 +70,8 @@
         <div id=buttom>
 
             {% for dojo in dojos%}
-                <h5>{{dojo.name}}</h5>
+                <h5>{{dojo.name}}</h5> <a href="/delete_dojo/{{dojo.id}}">Delete doojo</a>
+                <strong>Total Ninjas : {{dojo.ninjas.count}}</strong>
                 <ul>
                     {%for ninja in dojo.ninjas.all %}
                     <li>{{ninja.first_name}} {{ninja.last_name}}</li>

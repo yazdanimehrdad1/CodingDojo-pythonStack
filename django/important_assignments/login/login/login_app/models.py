@@ -1,39 +1,57 @@
 from django.db import models
-import re
+from datetime import datetime
+import re, bcrypt
+# Create your models here.
+# EMAIL_REGEX = re.compile(r'^[_a-z0-9-]+(.[_a-z0-9-]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,4}')
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 class UserManager(models.Manager):
-
-    def basic_validator(self, post_data):
+    def validator_registration(self, postData):
         errors = {}
-        if len(post_data['name']) < 1:
-            errors['name'] = 'User name is too short.'
-        if len(User.objects.filter(alias = post_data['alias'])) > 0:
-            errors['alias'] = 'This user alias is already in use.'
-        if len(post_data['alias']) < 1:
-            errors['alias'] = 'User alias must be at least one character long.'
-        if len(post_data['alias']) > 50:
-            errors['alias'] = 'User alias must be 50 characters or less.'
-        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-        if not EMAIL_REGEX.match(post_data['email']):        
-            errors['email'] = "Invalid email address."
-        if len(post_data['email']) > 384:
-            errors['email'] = 'Email address is too long.'
-        if len(post_data['password']) < 8:
-            errors['password'] = 'Password must be at least 8 characters long.'
-        if post_data['password'] != post_data['confirm_password']:
-            errors['confirm_password'] = 'Passwords do not match.'
-        try:
-            user = User.objects.get(email = post_data['email'])
-            errors['email_in_use'] = 'This email is already associated with an account.'
-        except:
-            pass
+        already_exist = User.objects.filter(email=postData['email']) #?
+        if len(postData['first_name'])<2:
+            errors['first_name']  = "first name must be more than 2 characters"
+        if len(postData['last_name'])<2:
+            errors['last_name']  = "last name must be more than 2 characters"
+        if len(postData['password'])<6:
+            errors['password'] = "password must be atleas 6 characters"
+        elif postData['password'] != postData['confirm_password']:
+            errors['password'] = "Paswords do not match"
+
+        if len(postData['email'])<1:
+            errors['email'] = "email cannot be blank"
+        elif not EMAIL_REGEX.match(postData['email']):
+            errors['email'] = "Invalid email address"
+        elif already_exist:
+            errors['email'] = "email already exist"
+
+        user_birthday  = datetime.strptime(postData['birthday'], '%Y-%m-%d')     
+        age = (datetime.now() - user_birthday).days/365 
+        print("User age", age)
+        if age<1:
+            errors['birthday'] = "must be older than 1 years old"
+
         return errors
 
+    def validator_login(self, postData):
+        errors={}
+        check_user_exist = User.objects.filter(email = postData['email'])
+        if not check_user_exist:
+            errors['login_email'] = "You are not registered"
+        else:
+            if not bcrypt.checkpw( postData['password'].encode() , check_user_exist[0].password.encode() ):
+                errors['login_email'] = "Wrong password"
+        return errors
+
+
+
 class User(models.Model):
-    name = models.CharField(max_length = 255)
-    alias = models.CharField(max_length = 50)
-    email = models.CharField(max_length = 384)
-    password = models.CharField(max_length = 60)
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    password=models.CharField(max_length=20)
+    updated_at = models.DateTimeField(auto_now_add=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
     objects = UserManager()
+

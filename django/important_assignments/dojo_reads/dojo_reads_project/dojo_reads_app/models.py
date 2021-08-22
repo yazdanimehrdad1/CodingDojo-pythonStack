@@ -24,6 +24,13 @@ class UserManager(models.Manager):
             errors['email'] = "Invalid email address"
         elif already_exist:
             errors['email'] = "email already exist"
+
+        user_birthday  = datetime.strptime(postData['birthday'], '%Y-%m-%d')     
+        age = (datetime.now() - user_birthday).days/365 
+        # 
+        if age<18:
+            errors['birthday'] = "must be older than 18 years old"
+
         return errors
 
     def validator_login(self, postData):

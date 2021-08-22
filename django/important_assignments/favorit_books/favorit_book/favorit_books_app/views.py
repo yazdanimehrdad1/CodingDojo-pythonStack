@@ -65,7 +65,9 @@ def create_book(request):
         description = request.POST['description'],
         creator = user
     )
-    user.favorited_books.add(new_book)
+    #Both of this would work
+    # user.favorited_books.add(new_book)
+    new_book.favorited_by.add(user)
 
     return redirect(f'/books/{new_book.id}')
 
@@ -106,3 +108,16 @@ def unfavorit(request,book_id):
 def logout(request):
     request.session.flush()
     return redirect('/')
+
+
+def user_favorits(request):
+    current_user = User.objects.get(id= request.session['user_id'])
+    # users_favorit=[]
+    # for book in Book.objects.all():
+    #     if book.favorited_by == curent_user:
+    #         users_favorit.append(book)
+    context={
+        'user_favorit_books': current_user.favorited_books.all()
+    }
+    return render(request, 'users_favorit.html', context)
+

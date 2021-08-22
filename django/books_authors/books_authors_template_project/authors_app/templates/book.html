@@ -16,12 +16,12 @@
     </nav>
     <div class="container">
         <h1>{{ book.title }}</h1>
-        <p><strong>Id</strong> {{ book.id }}</p>
+        <p><strong>Id</strong> {{ book.id }} </p>
         <p><strong>Description</strong> {{ book.description }}</p>
         <p><strong>Authors</strong></p>
         <ul>
             {% for author in book.authors.all %}
-            <li>{{ author.full_name }}</li>
+            <li>{{ author.full_name }} <a href="/remove_author/{{author.id}}/{{book.id}}">delete</a> </li>
             {% endfor %}
         </ul>
         {% if authors %}
@@ -31,7 +31,8 @@
                 <label for="author_id">Add Author</label>
                 <select name="author_id" id="author_id" class="form-control">
                     {% for author in authors %}
-                    <option value="{{ author.id }}">{{ author.full_name}}</option>
+                    
+                    <option value="{{ author.id }}">{{ author.full_name}}   </option>
                     {% endfor %}
                 </select>
             </div>

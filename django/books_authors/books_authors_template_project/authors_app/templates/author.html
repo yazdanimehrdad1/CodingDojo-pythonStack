@@ -27,9 +27,8 @@
         
             <select name="book_id" >
             {% for book in books%}
-
-                <option value="book.id">{{book.title}}</option>
             
+                <option value="{{book.id}}">{{book.title}}</option>
             {%endfor%}
 
             </select>
